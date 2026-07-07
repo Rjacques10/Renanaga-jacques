@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jacques Renanaga — Étudiant en Sécurité de l'Information</title>
+<meta name="description" content="Portfolio de Jacques Renanaga, étudiant BScIS en Sécurité de l'Information à SIIMT University College. Labs cybersécurité (Nmap, SQLMap, Metasploitable2), projets web et Java.">
+<meta name="keywords" content="Jacques Renanaga, cybersécurité, pentest, information security, SIIMT, Nmap, SQLMap, portfolio">
+<meta name="author" content="Jacques Renanaga">
+<meta property="og:title" content="Jacques Renanaga — Étudiant en Sécurité de l'Information">
+<meta property="og:description" content="Labs cybersécurité, projets web et Java d'un étudiant BScIS passionné de pentesting.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0b1524;
+    --bg-elevated: #142338;
+    --bg-card: #112035;
+    --border: #29486a;
+    --text: #eef3f9;
+    --text-muted: #9db4cc;
+    --amber: #d4af37;
+    --amber-soft: rgba(212,175,55,0.35);
+    --cyan: #4fb0d9;
+    --green: #4ade80;
+    --red: #ff6b6b;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --shadow: 0 20px 60px rgba(0,0,0,0.45);
+  }
+  html[data-theme="light"]{
+    --bg: #f5f3ee;
+    --bg-elevated: #ffffff;
+    --bg-card: #fbfaf7;
+    --border: #dedad2;
+    --text: #1b1f27;
+    --text-muted: #5b6472;
+    --amber: #b3760a;
+    --amber-soft: rgba(179,118,10,0.25);
+    --cyan: #0369a1;
+    --green: #15803d;
+    --red: #c0392b;
+    --shadow: 0 20px 60px rgba(0,0,0,0.08);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:radial-gradient(ellipse 1200px 700px at 50% -10%, var(--bg-elevated) 0%, var(--bg) 55%); background-color:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.6; overflow-x:hidden; transition:background .3s ease, color .3s ease;}
+  html[data-theme="light"] body{background:var(--bg);}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  ::selection{background:var(--amber); color:var(--bg);}
+  [data-i18n]{}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky; top:0; z-index:100; background:color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--border);}
+  nav{max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:16px 24px; gap:16px;}
+  .logo{font-family:var(--mono); font-weight:700; font-size:1.05rem; color:var(--text); letter-spacing:0.5px; white-space:nowrap;}
+  .logo span{color:var(--amber);}
+  .nav-links{display:flex; gap:22px; font-family:var(--mono); font-size:0.82rem; flex-wrap:wrap;}
+  .nav-links a{color:var(--text-muted); transition:color .2s;}
+  .nav-links a:hover{color:var(--amber);}
+  .nav-links a::before{content:"./"; color:var(--border);}
+  .nav-tools{display:flex; align-items:center; gap:10px;}
+  .icon-btn{
+    font-family:var(--mono); font-size:0.75rem; font-weight:600; color:var(--text);
+    border:1px solid var(--border); background:var(--bg-card); border-radius:6px;
+    padding:7px 10px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:6px;
+  }
+  .icon-btn:hover{border-color:var(--amber); color:var(--amber);}
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none;}
+  .burger span{width:22px; height:2px; background:var(--text);}
+
+  @media (max-width:860px){
+    .nav-links{
+      position:fixed; top:60px; left:0; right:0;
+      background:var(--bg-elevated); border-bottom:1px solid var(--border);
+      flex-direction:column; padding:20px 24px; gap:16px;
+      transform:translateY(-150%); transition:transform .25s ease;
+    }
+    .nav-links.open{transform:translateY(0);}
+    .burger{display:flex;}
+  }
+
+  /* ---------- GLOBAL FIXED GLOBE BACKGROUND ---------- */
+  .globe-scene{position:fixed; inset:0; overflow:hidden; opacity:0.4; pointer-events:none; z-index:0;}
+  .globe-scene canvas{position:absolute; inset:0; width:100%; height:100%; display:block;}
+  .scan-line{position:absolute; top:50%; left:50%; width:100vw; height:1px; transform:translate(-50%,-50%);
+    background:linear-gradient(90deg, transparent 0%, var(--red) 12%, var(--red) 88%, transparent 100%);
+    box-shadow:0 0 14px 2px var(--red); opacity:0.5;}
+  @media (max-width:900px){ .globe-scene{opacity:0.22;} }
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative; padding:70px 24px 70px; max-width:1180px; margin:0 auto;}
+
+  .hero-grid{position:relative; display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;}
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .eyebrow{position:relative; z-index:1; font-family:var(--mono); font-size:0.8rem; color:var(--green); display:flex; align-items:center; gap:8px; margin-bottom:18px;}
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+  @media (prefers-reduced-motion:reduce){ .dot{animation:none;} }
+
+  .hero h1{position:relative; z-index:1; font-family:var(--mono); font-weight:800; font-size:clamp(2.1rem,5vw,3.2rem); line-height:1.15; letter-spacing:-0.5px; margin-bottom:14px;}
+  .hero h1 .accent{color:var(--amber);}
+  .hero p.role{position:relative; z-index:1; font-size:1.1rem; color:var(--text-muted); margin-bottom:28px; max-width:480px;}
+
+  .btn-row{position:relative; z-index:1; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{font-family:var(--mono); font-size:0.85rem; font-weight:600; padding:12px 22px; border-radius:6px; border:1px solid var(--border); transition:all .2s ease; display:inline-flex; align-items:center; gap:8px; cursor:pointer;}
+  .btn-primary{background:var(--amber); color:#0b1524; border-color:var(--amber);}
+  .btn-primary:hover{filter:brightness(1.08); transform:translateY(-2px);}
+  .btn-ghost{color:var(--text); border-color:var(--border);}
+  .btn-ghost:hover{border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px);}
+
+  .terminal{background:var(--bg-card); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); position:relative; z-index:1;}
+  .term-bar{display:flex; align-items:center; gap:8px; padding:10px 14px; background:var(--bg-elevated); border-bottom:1px solid var(--border);}
+  .term-bar span{width:11px; height:11px; border-radius:50%;}
+  .term-bar span:nth-child(1){background:#ff5f56;}
+  .term-bar span:nth-child(2){background:#ffbd2e;}
+  .term-bar span:nth-child(3){background:#27c93f;}
+  .term-title{margin-left:8px; font-family:var(--mono); font-size:0.75rem; color:var(--text-muted);}
+  .term-body{padding:22px; font-family:var(--mono); font-size:0.85rem; min-height:220px;}
+  .term-line{margin-bottom:10px; white-space:pre-wrap;}
+  .prompt{color:var(--green);}
+  .cmd{color:var(--text);}
+  .out{color:var(--cyan);}
+  .out-muted{color:var(--text-muted);}
+  .cursor{display:inline-block; width:8px; height:1em; background:var(--amber); vertical-align:middle; animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- SECTIONS ---------- */
+  section{max-width:1180px; margin:0 auto; padding:70px 24px;}
+  .section-head{margin-bottom:40px;}
+  .section-tag{font-family:var(--mono); font-size:0.8rem; color:var(--amber); margin-bottom:8px; display:block;}
+  .section-tag::before{content:"$ ";}
+  h2.section-title{font-family:var(--mono); font-size:clamp(1.5rem,3vw,2rem); font-weight:700;}
+  .section-sub{color:var(--text-muted); max-width:600px; margin-top:10px;}
+
+  /* about */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:48px; align-items:start;}
+  @media (max-width:800px){.about-grid{grid-template-columns:1fr;}}
+  .about-grid p{color:var(--text-muted); margin-bottom:16px;}
+  .about-photo-wrap{border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--bg-card); max-width:280px; margin:0 auto;}
+  .about-photo-wrap img{width:100%; height:100%; object-fit:cover; aspect-ratio:4/5; filter:grayscale(15%);}
+  .stat-card{background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:12px;}
+  .stat-card .label{font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;}
+  .stat-card .value{font-family:var(--mono); font-size:1rem; margin-top:4px; color:var(--text);}
+  .status-badge{display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:0.72rem; color:var(--green); border:1px solid rgba(74,222,128,0.3); background:rgba(74,222,128,0.08); padding:4px 10px; border-radius:20px; margin-top:8px;}
+
+  /* skills */
+  .skill-groups{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  @media (max-width:700px){.skill-groups{grid-template-columns:1fr;}}
+  .skill-group{background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:22px;}
+  .skill-group h3{font-family:var(--mono); font-size:0.95rem; color:var(--cyan); margin-bottom:14px;}
+  .tag-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{font-family:var(--mono); font-size:0.75rem; border:1px solid var(--border); border-radius:20px; padding:5px 12px; color:var(--text-muted); transition:all .2s;}
+  .tag:hover{border-color:var(--amber); color:var(--amber);}
+
+  /* cyber labs / arsenal */
+  .lab-intro{background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--red); border-radius:8px; padding:18px 20px; margin-bottom:34px;}
+  .lab-intro .risk{font-family:var(--mono); font-size:0.75rem; color:var(--red); letter-spacing:1px;}
+  .arsenal-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:16px; margin-bottom:44px;}
+  .arsenal-card{background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:20px 12px; text-align:center; transition:all .2s;}
+  .arsenal-card:hover{border-color:var(--amber); transform:translateY(-3px);}
+  .arsenal-icon{font-size:1.7rem; margin-bottom:10px;}
+  .arsenal-name{font-family:var(--mono); font-size:0.78rem; color:var(--text);}
+  .lab-cards{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
+  @media (max-width:800px){.lab-cards{grid-template-columns:1fr;}}
+  .lab-card{background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:22px;}
+  .lab-card .lab-tag{display:inline-block; font-family:var(--mono); font-size:0.68rem; color:var(--bg); background:var(--amber); border-radius:4px; padding:2px 8px; margin-bottom:10px; letter-spacing:0.5px;}
+  .lab-card h3{font-family:var(--mono); font-size:1.02rem; margin-bottom:8px;}
+  .lab-card p{color:var(--text-muted); font-size:0.9rem; margin-bottom:10px;}
+  .lab-findings{list-style:none; font-family:var(--mono); font-size:0.78rem; color:var(--cyan);}
+  .lab-findings li{margin-bottom:5px; padding-left:14px; position:relative;}
+  .lab-findings li::before{content:"›"; position:absolute; left:0; color:var(--amber);}
+
+  /* courses */
+  .course-grid{display:none; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .course-grid.active{display:grid;}
+  @media (max-width:800px){.course-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:500px){.course-grid{grid-template-columns:1fr;}}
+  .course-card{background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:16px 18px;}
+  .course-card .code{font-family:var(--mono); font-size:0.75rem; color:var(--amber); margin-bottom:6px;}
+  .course-card .name{font-size:0.88rem; color:var(--text-muted);}
+  .level-tabs{display:flex; gap:10px; margin-bottom:28px; flex-wrap:wrap;}
+  .level-tab-btn{font-family:var(--mono); font-size:0.8rem; border:1px solid var(--border); background:var(--bg-card); color:var(--text-muted); padding:8px 16px; border-radius:20px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:8px;}
+  .level-tab-btn.active, .level-tab-btn:hover{border-color:var(--amber); color:var(--amber);}
+  .level-tab-btn .pill{font-size:0.62rem; padding:2px 7px; border-radius:10px; border:1px solid rgba(74,222,128,.3); color:var(--green); background:rgba(74,222,128,.08);}
+  .level-tab-btn.current .pill{border-color:rgba(255,180,84,.35); color:var(--amber); background:rgba(255,180,84,.1);}
+  .level-tab-btn.active .pill{border-color:transparent;}
+
+  /* private / locked projects */
+  .project-card.locked{border-style:dashed; opacity:0.9;}
+  .lock-badge{display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); border:1px dashed var(--border); padding:4px 10px; border-radius:20px;}
+
+  /* projects */
+  .project-tabs{display:flex; gap:10px; margin-bottom:28px; flex-wrap:wrap;}
+  .tab-btn{font-family:var(--mono); font-size:0.8rem; border:1px solid var(--border); background:var(--bg-card); color:var(--text-muted); padding:8px 16px; border-radius:20px; cursor:pointer; transition:all .2s;}
+  .tab-btn.active, .tab-btn:hover{border-color:var(--amber); color:var(--amber);}
+  .project-grid{display:none; grid-template-columns:repeat(2,1fr); gap:20px;}
+  .project-grid.active{display:grid;}
+  @media (max-width:700px){.project-grid{grid-template-columns:1fr;}}
+  .project-card{background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:20px; transition:all .2s;}
+  .project-card:hover{border-color:var(--amber);}
+  .project-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:10px;}
+  .project-title{font-family:var(--mono); font-weight:600; font-size:0.95rem;}
+  .lang-dot{display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); white-space:nowrap;}
+  .sw{width:9px; height:9px; border-radius:50%; display:inline-block;}
+  .project-desc{color:var(--text-muted); font-size:0.88rem; margin-bottom:14px;}
+  .project-link{font-family:var(--mono); font-size:0.8rem; color:var(--cyan);}
+  .project-link:hover{color:var(--amber);}
+
+  /* timeline (experience) */
+  .timeline{position:relative; padding-left:28px; border-left:2px solid var(--border);}
+  .tl-item{position:relative; padding-bottom:34px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{content:""; position:absolute; left:-34px; top:4px; width:11px; height:11px; border-radius:50%; background:var(--amber); box-shadow:0 0 0 4px color-mix(in srgb, var(--amber) 20%, transparent);}
+  .tl-date{font-family:var(--mono); font-size:0.75rem; color:var(--amber); margin-bottom:4px;}
+  .tl-title{font-weight:700; margin-bottom:4px;}
+  .tl-desc{color:var(--text-muted); font-size:0.9rem;}
+  .placeholder-note{font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); border:1px dashed var(--border); padding:10px 14px; border-radius:6px; margin-top:14px; display:inline-block;}
+
+  /* certifications */
+  .cert-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media (max-width:800px){.cert-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.cert-grid{grid-template-columns:1fr;}}
+  .cert-card{background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:20px; text-align:center;}
+  .cert-status{display:inline-block; font-family:var(--mono); font-size:0.65rem; border:1px solid var(--border); border-radius:20px; padding:3px 10px; margin-bottom:10px; color:var(--text-muted);}
+  .cert-status.done{color:var(--green); border-color:rgba(74,222,128,.3);}
+  .cert-status.progress{color:var(--cyan); border-color:rgba(125,211,252,.3);}
+  .cert-status.goal{color:var(--amber); border-color:rgba(255,180,84,.3);}
+  .cert-name{font-family:var(--mono); font-weight:600; font-size:0.9rem;}
+
+  /* github stats */
+  .gh-stats-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;}
+  @media (max-width:800px){.gh-stats-grid{grid-template-columns:1fr;}}
+  .gh-card{background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:14px; overflow:hidden;}
+  .gh-card img{width:100%; border-radius:6px;}
+
+  /* contact */
+  .contact-terminal{margin-bottom:24px;}
+  .contact-links{display:flex; gap:14px; flex-wrap:wrap;}
+
+  footer{max-width:1180px; margin:0 auto; padding:40px 24px 60px; text-align:center; color:var(--text-muted); font-family:var(--mono); font-size:0.8rem; border-top:1px solid var(--border);}
+  footer .foot-badges{display:flex; justify-content:center; gap:14px; margin-top:16px; flex-wrap:wrap;}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} }
+</style>
+</head>
+<body>
+
+<div class="globe-scene" aria-hidden="true">
+  <canvas id="globeCanvas"></canvas>
+  <div class="scan-line"></div>
+</div>
+
+<header>
+  <nav>
+    <div class="logo">Jacques<span>.</span>R</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" data-i18n="nav_home">Accueil</a>
+      <a href="#about" data-i18n="nav_about">À propos</a>
+      <a href="#skills" data-i18n="nav_skills">Compétences</a>
+      <a href="#labs" data-i18n="nav_labs">Cyber Labs</a>
+      <a href="#courses" data-i18n="nav_courses">Formation</a>
+      <a href="#projects" data-i18n="nav_projects">Projets</a>
+      <a href="#experience" data-i18n="nav_experience">Expériences</a>
+      <a href="#certifications" data-i18n="nav_certifications">Certifications</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </div>
+    <div class="nav-tools">
+      <button class="icon-btn" id="langToggle" title="Switch language">FR / EN</button>
+      <button class="icon-btn" id="themeToggle" title="Toggle theme">🌙</button>
+      <button class="burger" id="burger" aria-label="menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> <span data-i18n="hero_eyebrow">SYSTÈME EN LIGNE — DISPONIBLE POUR OPPORTUNITÉS</span></div>
+      <h1><span data-i18n="hero_title_1">Sécuriser</span> <span class="accent" data-i18n="hero_title_2">l'information</span>, <span data-i18n="hero_title_3">un système à la fois.</span></h1>
+      <p class="role" data-i18n="hero_role">Étudiant en Sécurité de l'Information (BScIS) à SIIMT University College passionné de pentesting, réseaux et développement web.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="assets/CV_Jacques_Renanga.pdf" download><span data-i18n="btn_cv">↓ Télécharger mon CV</span></a>
+        <a class="btn btn-ghost" href="#contact"><span data-i18n="btn_contact">Me contacter</span></a>
+        <a class="btn btn-ghost" href="#labs"><span data-i18n="btn_labs">Voir mes labs</span></a>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="term-bar"><span></span><span></span><span></span><span class="term-title">jacques@siimt:~</span></div>
+      <div class="term-body" id="termBody"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="reveal">
+  <div class="section-head">
+    <span class="section-tag" data-i18n="about_tag">cat about.md</span>
+    <h2 class="section-title" data-i18n="about_title">À propos de moi</h2>
+  </div>
+  <div class="about-grid">
+    <div>
+      <p data-i18n="about_p1">Je m'appelle Jacques Renanaga, étudiant en Sécurité de l'Information (BScIS) à SIIMT University College. Je m'intéresse particulièrement au pentesting, à l'analyse de vulnérabilités et à la sécurisation des réseaux et applications web.</p>
+      <p data-i18n="about_p2">En parallèle de mes études, je développe des projets web et logiciels — du HTML/CSS/JS à Java — et je documente mes laboratoires pratiques en cybersécurité (scans réseau, tests d'intrusion contrôlés, découverte de vulnérabilités) réalisés dans des environnements virtualisés et autorisés.</p>
+      <p data-i18n="about_p3">Je suis actuellement ouvert aux stages, projets collaboratifs et opportunités liées à la cybersécurité ou au développement.</p>
+      <span class="status-badge" data-i18n="about_status">● ouvert aux opportunités</span>
+    </div>
+    <div class="about-photo-wrap">
+      <img src="assets/IMG-20251027-WA0032.jpg" alt="Photo de Jacques Renanaga">
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="reveal">
+  <div class="section-head">
+    <span class="section-tag" data-i18n="skills_tag">ls ./skills</span>
+    <h2 class="section-title" data-i18n="skills_title">Compétences</h2>
+  </div>
+  <div class="skill-groups">
+    <div class="skill-group">
+      <h3 data-i18n="skills_g1">Sécurité offensive</h3>
+      <div class="tag-row">
+        <span class="tag">Reconnaissance</span>
+        <span class="tag">Scan réseau</span>
+        <span class="tag">SQL Injection</span>
+        <span class="tag">Vulnerability Assessment</span>
+        <span class="tag">Access Control</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3 data-i18n="skills_g2">Outils</h3>
+      <div class="tag-row">
+        <span class="tag">Nmap</span>
+        <span class="tag">SQLMap</span>
+        <span class="tag">Subfinder</span>
+        <span class="tag">Burp Suite</span>
+        <span class="tag">DVWA</span>
+        <span class="tag">Wireshark</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3 data-i18n="skills_g3">Développement</h3>
+      <div class="tag-row">
+        <span class="tag">HTML / CSS / JS</span>
+        <span class="tag">Java</span>
+        <span class="tag">Python</span>
+        <span class="tag">C++</span>
+        <span class="tag">Node.js / Express</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3 data-i18n="skills_g4">Environnements</h3>
+      <div class="tag-row">
+        <span class="tag">Kali Linux</span>
+        <span class="tag">VMware</span>
+        <span class="tag">VirtualBox</span>
+        <span class="tag">XAMPP</span>
+        <span class="tag">OpenSSL</span>
+        <span class="tag">Metasploitable2</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="labs" class="reveal">
+  <div class="section-head">
+    <span class="section-tag" data-i18n="labs_tag">./run cybersecurity-labs.sh</span>
+    <h2 class="section-title" data-i18n="labs_title">Cybersecurity Labs</h2>
+    <p class="section-sub" data-i18n="labs_sub">Laboratoires pratiques réalisés dans le cadre de mes cours BIS 307 et BIS 303, en environnement virtualisé et autorisé (Kali Linux, VMware).</p>
+  </div>
+
+  <div class="arsenal-grid">
+    <div class="arsenal-card"><div class="arsenal-icon">🐉</div><div class="arsenal-name">Kali Linux</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">🔎</div><div class="arsenal-name">Nmap</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">💉</div><div class="arsenal-name">SQLMap</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">🛰️</div><div class="arsenal-name">Subfinder</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">🎯</div><div class="arsenal-name">Burp Suite</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">🕷️</div><div class="arsenal-name">DVWA</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">🔐</div><div class="arsenal-name">OpenSSL</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">🧪</div><div class="arsenal-name">XAMPP</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">🖥️</div><div class="arsenal-name">Metasploitable2</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">📦</div><div class="arsenal-name">VMware</div></div>
+    <div class="arsenal-card"><div class="arsenal-icon">📦</div><div class="arsenal-name">VirtualBox</div></div>
+  </div>
+
+  <div class="lab-cards">
+    <div class="lab-card">
+      <span class="lab-tag" data-i18n="lab1_tag">BIS 307 — RAPPORT</span>
+      <h3 data-i18n="lab1_title">Évaluation de vulnérabilités — Reconnaissance &amp; SQLi</h3>
+      <p data-i18n="lab1_desc">Simulation complète d'un audit de sécurité sur un environnement autorisé (vulnweb.com), de la reconnaissance à l'exploitation contrôlée.</p>
+      <ul class="lab-findings">
+        <li data-i18n="lab1_f1">19 sous-domaines découverts via Subfinder</li>
+        <li data-i18n="lab1_f2">Injection SQL confirmée avec SQLMap</li>
+        <li data-i18n="lab1_f3">Extraction de bases, tables et utilisateur courant</li>
+        <li data-i18n="lab1_f4">Recommandations : requêtes paramétrées, WAF, hachage des mots de passe</li>
+      </ul>
+    </div>
+    <div class="lab-card">
+      <span class="lab-tag" data-i18n="lab2_tag">BIS 303 — RAPPORT</span>
+      <h3 data-i18n="lab2_title">Reconnaissance réseau avec Nmap</h3>
+      <p data-i18n="lab2_desc">Scan réseau complet d'une machine cible Metasploitable2 depuis Kali Linux : découverte d'hôtes, ports, services et détection d'OS.</p>
+      <ul class="lab-findings">
+        <li data-i18n="lab2_f1">Scan agressif (-A -O -sV) et détection de versions</li>
+        <li data-i18n="lab2_f2">Services vulnérables identifiés (FTP anonyme, Telnet, Samba obsolète)</li>
+        <li data-i18n="lab2_f3">Usage du Nmap Scripting Engine (NSE)</li>
+        <li data-i18n="lab2_f4">Comparaison Windows / Kali Linux, VMware networking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="courses" class="reveal">
+  <div class="section-head">
+    <span class="section-tag" data-i18n="courses_tag">ls ./coursework --all-levels</span>
+    <h2 class="section-title" data-i18n="courses_title">Formation</h2>
+    <p class="section-sub" data-i18n="courses_sub">Programme BScIS (Information Security) — SIIMT University College. Du Niveau 100 au Niveau 300 (semestre 1, en cours).</p>
+  </div>
+
+  <div class="level-tabs" id="course-tabs">
+    <button class="level-tab-btn" data-target="c100"><span class="pill" data-i18n="pill_done">terminé</span> <span data-i18n="tab_lvl100">Niveau 100</span></button>
+    <button class="level-tab-btn" data-target="c200"><span class="pill" data-i18n="pill_done">terminé</span> <span data-i18n="tab_lvl200">Niveau 200</span></button>
+    <button class="level-tab-btn current active" data-target="c300"><span class="pill" data-i18n="pill_current">en cours</span> <span data-i18n="tab_lvl300">Niveau 300</span></button>
+  </div>
+
+  <div class="course-grid" id="grid-c100">
+    <div class="course-card"><div class="code">UWC 101</div><div class="name">Communication Skills I</div></div>
+    <div class="course-card"><div class="code">UWF 101</div><div class="name">Foreign Language — French</div></div>
+    <div class="course-card"><div class="code">BIS 101</div><div class="name">Introduction to Computing</div></div>
+    <div class="course-card"><div class="code">BIT 103</div><div class="name">Basics of Accounting</div></div>
+    <div class="course-card"><div class="code">BIT 105</div><div class="name">African Studies</div></div>
+    <div class="course-card"><div class="code">BIT 107</div><div class="name">Calculus I</div></div>
+    <div class="course-card"><div class="code">UWC 102</div><div class="name">Communication Skills II</div></div>
+    <div class="course-card"><div class="code">BIT 102</div><div class="name">Logic and Critical Thinking</div></div>
+    <div class="course-card"><div class="code">BIT 104</div><div class="name">Fundamentals of Programming</div></div>
+    <div class="course-card"><div class="code">BIT 106</div><div class="name">Basic Digital Electronics</div></div>
+    <div class="course-card"><div class="code">BIS 102</div><div class="name">Fundamentals of Information Security</div></div>
+    <div class="course-card"><div class="code">BIT 108</div><div class="name">Calculus II</div></div>
+  </div>
+
+  <div class="course-grid" id="grid-c200">
+    <div class="course-card"><div class="code">BIT 201</div><div class="name">Computer Organization &amp; Architecture</div></div>
+    <div class="course-card"><div class="code">BIT 203</div><div class="name">Object Oriented Programming with C++</div></div>
+    <div class="course-card"><div class="code">BIS 201</div><div class="name">Data Communication</div></div>
+    <div class="course-card"><div class="code">BIS 203</div><div class="name">Managing Risk in Information Systems</div></div>
+    <div class="course-card"><div class="code">BIS 209</div><div class="name">Database Concepts and Technologies</div></div>
+    <div class="course-card"><div class="code">BIT 211</div><div class="name">Linear Algebra</div></div>
+    <div class="course-card"><div class="code">BIS 202</div><div class="name">Internet Protocols and Security Technologies</div></div>
+    <div class="course-card"><div class="code">BIT 204</div><div class="name">Object Oriented Programming with Java</div></div>
+    <div class="course-card"><div class="code">BIT 206</div><div class="name">Operating System Concepts</div></div>
+    <div class="course-card"><div class="code">BIS 204</div><div class="name">Statistical Computing</div></div>
+    <div class="course-card"><div class="code">BIS 206</div><div class="name">Computer Networks</div></div>
+    <div class="course-card"><div class="code">BIT 212</div><div class="name">Database Management Systems</div></div>
+  </div>
+
+  <div class="course-grid active" id="grid-c300">
+    <div class="course-card"><div class="code">BIS 301</div><div class="name">Security Policies and Implementation</div></div>
+    <div class="course-card"><div class="code">BIS 303</div><div class="name">Access Control and Penetration Testing</div></div>
+    <div class="course-card"><div class="code">BIS 305</div><div class="name">Web-based Concepts and Technologies</div></div>
+    <div class="course-card"><div class="code">BIS 307</div><div class="name">Distributed Networks and Security</div></div>
+    <div class="course-card"><div class="code">BIT 303</div><div class="name">Software Engineering</div></div>
+    <div class="course-card"><div class="code">BIT 304</div><div class="name">Human Computer Interactions</div></div>
+    <div class="course-card"><div class="code">BIT 405</div><div class="name">IT Entrepreneurship</div></div>
+    <div class="course-card"><div class="code">BIS 302</div><div class="name">System Administration &amp; Security</div></div>
+    <div class="course-card"><div class="code">BIS 304</div><div class="name">Mobile Application Development</div></div>
+    <div class="course-card"><div class="code">BIS 306</div><div class="name">Operating System Security</div></div>
+    <div class="course-card"><div class="code">BIT 310</div><div class="name">Research Methods in Computing</div></div>
+    <div class="course-card"><div class="code">BIS 308</div><div class="name">Web Programming (Server-side Scripting)</div></div>
+  </div>
+</section>
+
+<section id="projects" class="reveal">
+  <div class="section-head">
+    <span class="section-tag" data-i18n="projects_tag">ls ./projects</span>
+    <h2 class="section-title" data-i18n="projects_title">Projets</h2>
+    <p class="section-sub" data-i18n="projects_sub">Une sélection de projets web et Java — coursework et builds personnels.</p>
+  </div>
+
+  <div class="project-tabs">
+    <button class="tab-btn active" data-target="web" data-i18n="tab_web">Projets Web</button>
+    <button class="tab-btn" data-target="java" data-i18n="tab_java">Projets Java</button>
+    <button class="tab-btn" data-target="other" data-i18n="tab_other">Autres</button>
+    <button class="tab-btn" data-target="private" data-i18n="tab_private">Privé / En cours</button>
+  </div>
+
+  <div class="project-grid active" id="grid-web">
+    
+    <div class="project-card">
+      <div class="project-top"><span class="project-title">CV</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
+      <p class="project-desc" data-i18n="proj_cv">Un CV en HTML/CSS construit à la main — un exercice de mise en page et de style de contenu personnel.</p>
+      <a class="project-link" href="https://github.com/Rjacques10/CV" target="_blank" rel="noopener">→ view repository</a>
+    </div>
+    <div class="project-card">
+      <div class="project-top"><span class="project-title">restaurant-pro</span><span class="lang-dot"><span class="sw" style="background:#f1e05a"></span>JavaScript</span></div>
+      <p class="project-desc" data-i18n="proj_resto">Un projet web à thème restaurant utilisé pour pratiquer l'interactivité front-end en JavaScript.</p>
+      <a class="project-link" href="https://github.com/Rjacques10/restaurant-pro" target="_blank" rel="noopener">→ view repository</a>
+    </div>
+    <div class="project-card">
+      <div class="project-top"><span class="project-title">basique</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
+      <p class="project-desc" data-i18n="proj_basique">Un projet HTML/CSS fondamental pour ancrer les bases de la mise en page et du style.</p>
+      <a class="project-link" href="https://github.com/Rjacques10/basic" target="_blank" rel="noopener">→ view repository</a>
+    </div>
+    <div class="project-card">
+      <div class="project-top"><span class="project-title">Faveur-Divin</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
+      <p class="project-desc" data-i18n="proj_faveur">Un projet HTML open-source (licence MIT), exploration de la structure de page et du design de contenu.</p>
+      <a class="project-link" href="https://github.com/Rjacques10/Faveur-Divine" target="_blank" rel="noopener">→ view repository</a>
+    </div>
+    <div class="project-card">
+      <div class="project-top"><span class="project-title">déesse-BB</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
+      <p class="project-desc" data-i18n="proj_deesse">Un projet HTML public utilisé pour explorer une nouvelle mise en page et un nouveau style visuel.</p>
+      <a class="project-link" href="https://github.com/Rjacques10/goddess-BB" target="_blank" rel="noopener">→ github.com/Rjacques10</a>
+    </div>
+  </div>
+
+  <div class="project-grid" id="grid-java">
+    <div class="project-card">
+      <div class="project-top"><span class="project-title">Système de gestion de campus intelligent</span><span class="lang-dot"><span class="sw" style="background:#b07219"></span>Java</span></div>
+      <p class="project-desc" data-i18n="proj_campus">Un système intelligent de gestion de campus explorant comment les systèmes d'information peuvent simplifier les opérations universitaires quotidiennes.</p>
+      <a class="project-link" href="https://github.com/Rjacques10/Smart-Campus-Management-System" target="_blank" rel="noopener">→ view repository</a>
+    </div>
+  </div>
+
+  <div class="project-grid" id="grid-other">
+    <div class="project-card">
+      <div class="project-top"><span class="project-title">LeçonsC-</span><span class="lang-dot"><span class="sw" style="background:#f34b7d"></span>C++</span></div>
+      <p class="project-desc" data-i18n="proj_lecons">Exercices pratiques et notes d'apprentissage du C++ — logique, mémoire et résolution de problèmes.</p>
+      <a class="project-link" href="https://github.com/Rjacques10/LessonsC-" target="_blank" rel="noopener">→ view repository</a>
+    </div>
+    <div class="project-card">
+      <div class="project-top"><span class="project-title">Pro_py</span><span class="lang-dot"><span class="sw" style="background:#3572A5"></span>Python</span></div>
+      <p class="project-desc" data-i18n="proj_propy">Un projet Python utilisé pour pratiquer le scripting et la résolution de problèmes computationnels.</p>
+      <a class="project-link" href="https://github.com/Rjacques10/Pro_py" target="_blank" rel="noopener">→ view repository</a>
+    </div>
+  </div>
+
+  <div class="project-grid" id="grid-private">
+    <div class="project-card locked">
+      <div class="project-top"><span class="project-title">SRC-Plateforme-de-vote-réelle</span><span class="lang-dot"><span class="sw" style="background:#00B4AB"></span>Dart</span></div>
+      <p class="project-desc" data-i18n="proj_vote">Plateforme de vote en ligne réelle, en développement actif — Dart / Flutter. Dépôt privé le temps de finaliser la sécurité du système.</p>
+      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+    </div>
+    <div class="project-card locked">
+      <div class="project-top"><span class="project-title">restaurant-Faveur-Divine</span><span class="lang-dot"><span class="sw" style="background:#f1e05a"></span>JavaScript</span></div>
+      <p class="project-desc" data-i18n="proj_restofaveur">Variante d'un site de restaurant en JavaScript, encore en cours de développement.</p>
+      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+    </div>
+    <div class="project-card locked">
+      <div class="project-top"><span class="project-title">boutique Sherina</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
+      <p class="project-desc" data-i18n="proj_boutique">Boutique en ligne de jouets (Sherina) — projet HTML en développement.</p>
+      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+    </div>
+    <div class="project-card locked">
+      <div class="project-top"><span class="project-title">amour</span><span class="lang-dot"><span class="sw" style="background:#f1e05a"></span>JavaScript</span></div>
+      <p class="project-desc" data-i18n="proj_amour">Projet personnel en JavaScript, encore en cours de développement.</p>
+      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+    </div>
+    <div class="project-card locked">
+      <div class="project-top"><span class="project-title">Rêve d'enfants</span><span class="lang-dot"><span class="sw" style="background:#8b93a1"></span>—</span></div>
+      <p class="project-desc" data-i18n="proj_reve">Projet personnel encore en développement, non finalisé.</p>
+      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+    </div>
+    <div class="project-card locked">
+      <div class="project-top"><span class="project-title">projet_ventes</span><span class="lang-dot"><span class="sw" style="background:#DA5B0B"></span>Jupyter Notebook</span></div>
+      <p class="project-desc" data-i18n="proj_ventes">Notebook d'analyse de données de ventes — exploration de données avec Python/Jupyter.</p>
+      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="reveal">
+  <div class="section-head">
+    <span class="section-tag" data-i18n="exp_tag">cat experience.log</span>
+    <h2 class="section-title" data-i18n="exp_title">Expériences</h2>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">2024 — <span data-i18n="exp_present">présent</span></div>
+      <div class="tl-title" data-i18n="exp1_title">Étudiant en Sécurité de l'Information (BScIS)</div>
+      <div class="tl-desc" data-i18n="exp1_desc">SIIMT University College — labs pratiques en pentesting, réseaux et sécurité des systèmes.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026</div>
+      <div class="tl-title" data-i18n="exp2_title">Développeur indépendant</div>
+      <div class="tl-desc" data-i18n="exp2_desc">Conception et développement de "Citation du jour RJ", un site web personnel en Node.js/Express.</div>
+    </div>
+  </div>
+  <span class="placeholder-note" data-i18n="exp_note">✎ Section à compléter — ajoute tes stages ou expériences professionnelles ici.</span>
+</section>
+
+<section id="certifications" class="reveal">
+  <div class="section-head">
+    <span class="section-tag" data-i18n="cert_tag">cat certifications.txt</span>
+    <h2 class="section-title" data-i18n="cert_title">Certifications</h2>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <span class="cert-status progress" data-i18n="cert_status_progress">EN COURS</span>
+      <div class="cert-name">BScIS — SIIMT University College</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-status goal" data-i18n="cert_status_goal">OBJECTIF</span>
+      <div class="cert-name">CompTIA Security+</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-status goal" data-i18n="cert_status_goal">OBJECTIF</span>
+      <div class="cert-name">CEH (Certified Ethical Hacker)</div>
+    </div>
+  </div>
+  <span class="placeholder-note" data-i18n="cert_note">✎ Ajoute ici tes certifications obtenues (badges, dates, organismes).</span>
+</section>
+
+<section id="github-stats" class="reveal">
+  <div class="section-head">
+    <span class="section-tag">curl api.github.com/Rjacques10</span>
+    <h2 class="section-title" data-i18n="gh_title">Activité GitHub</h2>
+  </div>
+  <div class="gh-stats-grid">
+    <div class="gh-card"><img loading="lazy" src="https://github-readme-stats.vercel.app/api?username=Rjacques10&show_icons=true&theme=dark&hide_border=true&bg_color=10151c&title_color=ffb454&icon_color=7dd3fc&text_color=8b93a1" alt="GitHub stats"></div>
+    <div class="gh-card"><img loading="lazy" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Rjacques10&layout=compact&theme=dark&hide_border=true&bg_color=10151c&title_color=ffb454&text_color=8b93a1" alt="Top languages"></div>
+    <div class="gh-card"><img loading="lazy" src="https://streak-stats.demolab.com/?user=Rjacques10&theme=dark&hide_border=true&background=10151c&ring=ffb454&fire=ffb454&currStreakLabel=7dd3fc" alt="GitHub streak"></div>
+    <div class="gh-card"><img loading="lazy" src="https://ghchart.rshah.org/ffb454/Rjacques10" alt="Contribution graph"></div>
+  </div>
+</section>
+
+<section id="contact" class="reveal">
+  <div class="section-head">
+    <span class="section-tag" data-i18n="contact_tag">cat contact.txt</span>
+    <h2 class="section-title" data-i18n="contact_title">Me contacter</h2>
+    <p class="section-sub" data-i18n="contact_sub">Ouvert aux stages, projets bénévoles et collaborations en cybersécurité ou technologie.</p>
+  </div>
+  <div class="terminal contact-terminal">
+    <div class="term-bar"><span></span><span></span><span></span><span class="term-title">contact.txt</span></div>
+    <div class="term-body">
+      <div class="term-line"><span class="out-muted">name</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="out">Jacques Renanaga</span></div>
+      <div class="term-line"><span class="out-muted">location</span><span class="out">Accra, Ghana</span></div>
+      <div class="term-line"><span class="out-muted">email</span>&nbsp;&nbsp;&nbsp;<span class="out">renanagajacques@gmail.com</span></div>
+      <div class="term-line"><span class="out-muted">whatsapp</span><span class="out">+233 53 115 3364</span></div>
+      <div class="term-line"><span class="out-muted">github</span>&nbsp;&nbsp;<span class="out">github.com/Rjacques10</span></div>
+      <div class="term-line"><span class="out-muted">status</span>&nbsp;&nbsp;<span class="out" data-i18n="contact_status">ouvert aux stages &amp; collaborations</span></div>
+    </div>
+  </div>
+  <div class="contact-links">
+    <a class="btn btn-primary" href="mailto:renanagajacques@gmail.com"><span data-i18n="btn_hire">✉ Hire Me</span></a>
+    <a class="btn btn-ghost" href="https://wa.me/233531153364" target="_blank" rel="noopener">→ WhatsApp</a>
+    <a class="btn btn-ghost" href="https://github.com/Rjacques10" target="_blank" rel="noopener">→ GitHub</a>
+    <a class="btn btn-ghost" href="#" id="linkedinLink" target="_blank" rel="noopener">→ LinkedIn</a>
+    <a class="btn btn-ghost" href="assets/CV_Jacques_Renanga.pdf" download><span data-i18n="btn_cv_short">↓ CV</span></a>
+  </div>
+</section>
+
+<footer>
+  <div data-i18n="footer_built">construit par Jacques Renanaga</div>
+  <div class="foot-badges">
+    <span>© <span id="year"></span></span>
+    <span>SIIMT University College</span>
+    <span>Ghana 🇬🇭</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ----- LinkedIn placeholder (update this href once the profile URL is confirmed) -----
+  document.getElementById('linkedinLink').href = "https://www.linkedin.com/";
+
+  // ----- mobile nav -----
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // ----- theme toggle -----
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  function applyTheme(t){
+    root.setAttribute('data-theme', t);
+    themeToggle.textContent = t === 'dark' ? '🌙' : '☀️';
+    try{ localStorage.setItem('jr-theme', t); }catch(e){}
+  }
+  let savedTheme = 'dark';
+  try{ savedTheme = localStorage.getItem('jr-theme') || 'dark'; }catch(e){}
+  applyTheme(savedTheme);
+  themeToggle.addEventListener('click', () => {
+    applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  // ----- language toggle -----
+  const translations = {
+    fr: {
+      nav_home:"Accueil", nav_about:"À propos", nav_skills:"Compétences", nav_labs:"Cyber Labs",
+      nav_courses:"Formation", nav_projects:"Projets", nav_experience:"Expériences",
+      nav_certifications:"Certifications", nav_contact:"Contact",
+      hero_eyebrow:"SYSTÈME EN LIGNE — DISPONIBLE POUR OPPORTUNITÉS",
+      hero_title_1:"Sécuriser", hero_title_2:"l'information", hero_title_3:", un système à la fois.",
+      hero_role:"Étudiant en Sécurité de l'Information (BScIS) à SIIMT University College — passionné de pentesting, réseaux et développement web.",
+      btn_cv:"↓ Télécharger mon CV", btn_contact:"Me contacter", btn_labs:"Voir mes labs",
+      about_tag:"cat about.md", about_title:"À propos de moi",
+      about_p1:"Je m'appelle Jacques Renanaga, étudiant en Sécurité de l'Information (BScIS) à SIIMT University College. Je m'intéresse particulièrement au pentesting, à l'analyse de vulnérabilités et à la sécurisation des réseaux et applications web.",
+      about_p2:"En parallèle de mes études, je développe des projets web et logiciels — du HTML/CSS/JS à Java — et je documente mes laboratoires pratiques en cybersécurité (scans réseau, tests d'intrusion contrôlés, découverte de vulnérabilités) réalisés dans des environnements virtualisés et autorisés.",
+      about_p3:"Je suis actuellement ouvert aux stages, projets collaboratifs et opportunités liées à la cybersécurité ou au développement.",
+      about_status:"● ouvert aux opportunités",
+      skills_tag:"ls ./skills", skills_title:"Compétences",
+      skills_g1:"Sécurité offensive", skills_g2:"Outils", skills_g3:"Développement", skills_g4:"Environnements",
+      labs_tag:"./run cybersecurity-labs.sh", labs_title:"Cybersecurity Labs",
+      labs_sub:"Laboratoires pratiques réalisés dans le cadre de mes cours BIS 307 et BIS 303, en environnement virtualisé et autorisé (Kali Linux, VMware).",
+      lab1_tag:"BIS 307 — RAPPORT", lab1_title:"Évaluation de vulnérabilités — Reconnaissance & SQLi",
+      lab1_desc:"Simulation complète d'un audit de sécurité sur un environnement autorisé (vulnweb.com), de la reconnaissance à l'exploitation contrôlée.",
+      lab1_f1:"19 sous-domaines découverts via Subfinder", lab1_f2:"Injection SQL confirmée avec SQLMap",
+      lab1_f3:"Extraction de bases, tables et utilisateur courant", lab1_f4:"Recommandations : requêtes paramétrées, WAF, hachage des mots de passe",
+      lab2_tag:"BIS 303 — RAPPORT", lab2_title:"Reconnaissance réseau avec Nmap",
+      lab2_desc:"Scan réseau complet d'une machine cible Metasploitable2 depuis Kali Linux : découverte d'hôtes, ports, services et détection d'OS.",
+      lab2_f1:"Scan agressif (-A -O -sV) et détection de versions",
+      lab2_f2:"Services vulnérables identifiés (FTP anonyme, Telnet, Samba obsolète)",
+      lab2_f3:"Usage du Nmap Scripting Engine (NSE)", lab2_f4:"Comparaison Windows / Kali Linux, VMware networking",
+      courses_tag:"ls ./coursework --all-levels", courses_title:"Formation", courses_sub:"Programme BScIS (Information Security) — SIIMT University College. Du Niveau 100 au Niveau 300 (semestre 1, en cours).",
+      tab_lvl100:"Niveau 100", tab_lvl200:"Niveau 200", tab_lvl300:"Niveau 300",
+      pill_done:"terminé", pill_current:"en cours",
+      projects_tag:"ls ./projects", projects_title:"Projets", projects_sub:"Une sélection de projets web et Java — coursework et builds personnels.",
+      tab_web:"Projets Web", tab_java:"Projets Java", tab_other:"Autres", tab_private:"Privé / En cours",
+      badge_private:"Dépôt privé",
+      proj_citation:"Site de citations en français (citation-du-jour-rj.com) avec recherche, partage social, profil utilisateur et notifications par e-mail — Node.js / Express.",
+      proj_cv:"Un CV en HTML/CSS construit à la main — un exercice de mise en page et de style de contenu personnel.",
+      proj_resto:"Un projet web à thème restaurant utilisé pour pratiquer l'interactivité front-end en JavaScript.",
+      proj_basique:"Un projet HTML/CSS fondamental pour ancrer les bases de la mise en page et du style.",
+      proj_faveur:"Un projet HTML open-source (licence MIT), exploration de la structure de page et du design de contenu.",
+      proj_deesse:"Un projet HTML public utilisé pour explorer une nouvelle mise en page et un nouveau style visuel.",
+      proj_campus:"Un système intelligent de gestion de campus explorant comment les systèmes d'information peuvent simplifier les opérations universitaires quotidiennes.",
+      proj_lecons:"Exercices pratiques et notes d'apprentissage du C++ — logique, mémoire et résolution de problèmes.",
+      proj_propy:"Un projet Python utilisé pour pratiquer le scripting et la résolution de problèmes computationnels.",
+      proj_vote:"Plateforme de vote en ligne réelle, en développement actif — Dart / Flutter. Dépôt privé le temps de finaliser la sécurité du système.",
+      proj_restofaveur:"Variante d'un site de restaurant en JavaScript, encore en cours de développement.",
+      proj_boutique:"Boutique en ligne de jouets (Sherina) — projet HTML en développement.",
+      proj_amour:"Projet personnel en JavaScript, encore en cours de développement.",
+      proj_reve:"Projet personnel encore en développement, non finalisé.",
+      proj_ventes:"Notebook d'analyse de données de ventes — exploration de données avec Python/Jupyter.",
+      exp_tag:"cat experience.log", exp_title:"Expériences", exp_present:"présent",
+      exp1_title:"Étudiant en Sécurité de l'Information (BScIS)",
+      exp1_desc:"SIIMT University College — labs pratiques en pentesting, réseaux et sécurité des systèmes.",
+      exp2_title:"Développeur indépendant",
+      exp2_desc:"Conception et développement de \"Citation du jour RJ\", un site web personnel en Node.js/Express.",
+      exp_note:"✎ Section à compléter — ajoute tes stages ou expériences professionnelles ici.",
+      cert_tag:"cat certifications.txt", cert_title:"Certifications",
+      cert_status_progress:"EN COURS", cert_status_goal:"OBJECTIF",
+      cert_note:"✎ Ajoute ici tes certifications obtenues (badges, dates, organismes).",
+      gh_title:"Activité GitHub",
+      contact_tag:"cat contact.txt", contact_title:"Me contacter",
+      contact_sub:"Ouvert aux stages, projets bénévoles et collaborations en cybersécurité ou technologie.",
+      contact_status:"ouvert aux stages & collaborations",
+      btn_hire:"✉ Hire Me", btn_cv_short:"↓ CV",
+      footer_built:"construit par Jacques Renanaga"
+    },
+    en: {
+      nav_home:"Home", nav_about:"About", nav_skills:"Skills", nav_labs:"Cyber Labs",
+      nav_courses:"Coursework", nav_projects:"Projects", nav_experience:"Experience",
+      nav_certifications:"Certifications", nav_contact:"Contact",
+      hero_eyebrow:"SYSTEM ONLINE — OPEN TO OPPORTUNITIES",
+      hero_title_1:"Securing", hero_title_2:"information", hero_title_3:", one system at a time.",
+      hero_role:"Information Security (BScIS) student at SIIMT University College — passionate about pentesting, networks and web development.",
+      btn_cv:"↓ Download my CV", btn_contact:"Contact me", btn_labs:"See my labs",
+      about_tag:"cat about.md", about_title:"About me",
+      about_p1:"I'm Jacques Renanaga, an Information Security (BScIS) student at SIIMT University College. I'm especially interested in pentesting, vulnerability analysis and securing networks and web applications.",
+      about_p2:"Alongside my studies, I build web and software projects — from HTML/CSS/JS to Java — and document my hands-on cybersecurity labs (network scans, controlled intrusion tests, vulnerability discovery) carried out in virtualized, authorized environments.",
+      about_p3:"I'm currently open to internships, collaborative projects and opportunities in cybersecurity or development.",
+      about_status:"● open to opportunities",
+      skills_tag:"ls ./skills", skills_title:"Skills",
+      skills_g1:"Offensive security", skills_g2:"Tools", skills_g3:"Development", skills_g4:"Environments",
+      labs_tag:"./run cybersecurity-labs.sh", labs_title:"Cybersecurity Labs",
+      labs_sub:"Hands-on labs carried out for my BIS 307 and BIS 303 courses, in a virtualized, authorized environment (Kali Linux, VMware).",
+      lab1_tag:"BIS 307 — REPORT", lab1_title:"Vulnerability Assessment — Recon & SQLi",
+      lab1_desc:"Full simulation of a security audit on an authorized target (vulnweb.com), from reconnaissance to controlled exploitation.",
+      lab1_f1:"19 subdomains discovered via Subfinder", lab1_f2:"SQL injection confirmed with SQLMap",
+      lab1_f3:"Databases, tables and current user extracted", lab1_f4:"Recommendations: parameterized queries, WAF, password hashing",
+      lab2_tag:"BIS 303 — REPORT", lab2_title:"Network reconnaissance with Nmap",
+      lab2_desc:"Full network scan of a Metasploitable2 target machine from Kali Linux: host discovery, ports, services and OS detection.",
+      lab2_f1:"Aggressive scan (-A -O -sV) and version detection",
+      lab2_f2:"Vulnerable services identified (anonymous FTP, Telnet, outdated Samba)",
+      lab2_f3:"Use of the Nmap Scripting Engine (NSE)", lab2_f4:"Windows / Kali Linux comparison, VMware networking",
+      courses_tag:"ls ./coursework --all-levels", courses_title:"Coursework", courses_sub:"BScIS (Information Security) program — SIIMT University College. From Level 100 through Level 300 (semester 1, in progress).",
+      tab_lvl100:"Level 100", tab_lvl200:"Level 200", tab_lvl300:"Level 300",
+      pill_done:"done", pill_current:"in progress",
+      projects_tag:"ls ./projects", projects_title:"Projects", projects_sub:"A selection of web and Java projects — coursework and personal builds.",
+      tab_web:"Web Projects", tab_java:"Java Projects", tab_other:"Other", tab_private:"Private / In Progress",
+      badge_private:"Private repo",
+      proj_citation:"French-language quotes website (citation-du-jour-rj.com) with search, social sharing, user profile and email notifications — Node.js / Express.",
+      proj_cv:"A hand-built HTML/CSS résumé — an early exercise in structuring and styling personal content.",
+      proj_resto:"A restaurant-themed web project used to practice front-end interactivity with JavaScript.",
+      proj_basique:"A foundational HTML/CSS build used to lock in layout and styling fundamentals.",
+      proj_faveur:"An open-source HTML project (MIT license), exploring page structure and content design.",
+      proj_deesse:"A public HTML project used to explore a new layout and visual style.",
+      proj_campus:"A smart campus management system exploring how information systems can streamline day-to-day university operations.",
+      proj_lecons:"Practice exercises and notes from learning C++ fundamentals — logic, memory, and problem-solving drills.",
+      proj_propy:"A Python project used to practice scripting and computational problem-solving.",
+      proj_vote:"A real online voting platform, under active development — Dart / Flutter. Kept private while system security is finalized.",
+      proj_restofaveur:"A JavaScript variant of a restaurant website, still under development.",
+      proj_boutique:"An online toy shop (Sherina) — HTML project under development.",
+      proj_amour:"A personal JavaScript project, still under development.",
+      proj_reve:"A personal project still in development, not yet finalized.",
+      proj_ventes:"A sales data analysis notebook — data exploration with Python/Jupyter.",
+      exp_tag:"cat experience.log", exp_title:"Experience", exp_present:"present",
+      exp1_title:"Information Security (BScIS) Student",
+      exp1_desc:"SIIMT University College — hands-on labs in pentesting, networking and systems security.",
+      exp2_title:"Independent Developer",
+      exp2_desc:"Design and development of \"Citation du jour RJ\", a personal website built with Node.js/Express.",
+      exp_note:"✎ Section to complete — add your internships or professional experience here.",
+      cert_tag:"cat certifications.txt", cert_title:"Certifications",
+      cert_status_progress:"IN PROGRESS", cert_status_goal:"GOAL",
+      cert_note:"✎ Add your earned certifications here (badges, dates, issuers).",
+      gh_title:"GitHub Activity",
+      contact_tag:"cat contact.txt", contact_title:"Get in touch",
+      contact_sub:"Open to internships, volunteer projects and collaborations in cybersecurity or tech.",
+      contact_status:"open to internships & collaborations",
+      btn_hire:"✉ Hire Me", btn_cv_short:"↓ CV",
+      footer_built:"built by Jacques Renanaga"
+    }
+  };
+
+  const langToggle = document.getElementById('langToggle');
+  function applyLang(lang){
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if(translations[lang][key] !== undefined){ el.innerHTML = translations[lang][key]; }
+    });
+    langToggle.textContent = lang === 'fr' ? 'FR / EN' : 'EN / FR';
+    try{ localStorage.setItem('jr-lang', lang); }catch(e){}
+  }
+  let savedLang = 'fr';
+  try{ savedLang = localStorage.getItem('jr-lang') || 'fr'; }catch(e){}
+  applyLang(savedLang);
+  langToggle.addEventListener('click', () => {
+    applyLang(document.documentElement.lang === 'fr' ? 'en' : 'fr');
+  });
+
+  // ----- project tabs -----
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.project-grid').forEach(g => g.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('grid-' + btn.dataset.target).classList.add('active');
+    });
+  });
+
+  // ----- coursework level tabs -----
+  document.querySelectorAll('.level-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.level-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#grid-c100, #grid-c200, #grid-c300').forEach(g => g.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('grid-' + btn.dataset.target).classList.add('active');
+    });
+  });
+
+  // ----- reveal on scroll -----
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ----- terminal boot animation -----
+  const lines = [
+    { type:'cmd', text:'whoami' },
+    { type:'out', text:'jacques_renanaga' },
+    { type:'cmd', text:'cat role.txt' },
+    { type:'out', text:'BSc Information Security Student\\n@ SIIMT University College, Ghana' },
+    { type:'cmd', text:'cat interests.txt' },
+    { type:'out', text:'Cybersecurity · Pentesting\\nWeb Development · Java' },
+    { type:'cmd', text:'echo $STATUS' },
+    { type:'out', text:'OPEN_TO_OPPORTUNITIES' }
+  ];
+  const termBody = document.getElementById('termBody');
+  let li = 0;
+  function typeLine(){
+    if(li >= lines.length){
+      const cur = document.createElement('div');
+      cur.className = 'term-line';
+      cur.innerHTML = '<span class="prompt">$</span> <span class="cursor"></span>';
+      termBody.appendChild(cur);
+      return;
+    }
+    const line = lines[li];
+    const div = document.createElement('div');
+    div.className = 'term-line';
+    termBody.appendChild(div);
+    if(line.type === 'cmd'){
+      let i = 0;
+      const prefix = '<span class="prompt">$</span> <span class="cmd">';
+      function typeChar(){
+        div.innerHTML = prefix + line.text.slice(0, i) + '<span class="cursor"></span></span>';
+        i++;
+        if(i <= line.text.length){ setTimeout(typeChar, 32); }
+        else { div.innerHTML = prefix + line.text + '</span>'; li++; setTimeout(typeLine, 200); }
+      }
+      typeChar();
+    } else {
+      div.innerHTML = '<span class="out">' + line.text.replace(/\\n/g,'<br>') + '</span>';
+      li++;
+      setTimeout(typeLine, 320);
+    }
+  }
+  typeLine();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<script>
+(function(){
+  const scene = document.querySelector('.globe-scene');
+  const canvas = document.getElementById('globeCanvas');
+  if(!scene || !canvas || typeof d3 === 'undefined') return;
+  const ctx = canvas.getContext('2d');
+
+  function cssVar(name, fallback){
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+  }
+  function toRgba(hex, alpha){
+    let h = hex.replace('#','');
+    if(h.length === 3){ h = h.split('').map(c => c+c).join(''); }
+    const n = parseInt(h, 16);
+    const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rotation = [10, -18, 0];
+  let width = 0, height = 0, dpr = 1;
+  let land = null, landDots = [];
+
+  function resize(){
+    dpr = window.devicePixelRatio || 1;
+    width = scene.clientWidth;
+    height = scene.clientHeight;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+  window.addEventListener('resize', resize);
+
+  function makeProjection(){
+    const r = Math.min(width, height) / 2 * 1.05;
+    return d3.geoOrthographic()
+      .rotate(rotation)
+      .scale(r)
+      .translate([width * 0.66, height * 0.5])
+      .clipAngle(90);
+  }
+
+  function draw(){
+    if(!width || !height) return;
+    const amber = cssVar('--amber', '#ffb454');
+    const cyan = cssVar('--cyan', '#7dd3fc');
+    const projection = makeProjection();
+    const path = d3.geoPath(projection, ctx);
+
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.beginPath();
+    path({type: 'Sphere'});
+    ctx.strokeStyle = toRgba(cyan, 0.25);
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.beginPath();
+    path(d3.geoGraticule10());
+    ctx.strokeStyle = toRgba(amber, 0.08);
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+
+    if(land){
+      ctx.beginPath();
+      path(land);
+      ctx.fillStyle = toRgba(amber, 0.05);
+      ctx.fill();
+      ctx.strokeStyle = toRgba(amber, 0.5);
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = toRgba(amber, 0.55);
+      path.pointRadius(1.1);
+      for(let i = 0; i < landDots.length; i++){
+        ctx.beginPath();
+        path({type: 'Point', coordinates: landDots[i]});
+        ctx.fill();
+      }
+    }
+  }
+
+  let lastT = null;
+function tick(t){
+    if(lastT === null) lastT = t;
+    const dt = (t - lastT) / 1000;
+    lastT = t;
+    rotation[0] += dt * 5.5;
+    draw();
+    requestAnimationFrame(tick);
+}
+
+  // Draw the base sphere/graticule right away, without waiting on the network.
+resize();
+if(!reduceMotion){ requestAnimationFrame(tick); }
+
+  // Then try to enrich it with real continent outlines (nice-to-have, not required).
+fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json')
+    .then(r => r.json())
+    .then(topo => {
+    land = topojson.feature(topo, topo.objects.land);
+    const step = 3;
+        for(let lat = -84; lat <= 84; lat += step){
+        for(let lon = -180; lon < 180; lon += step){
+        if(d3.geoContains(land, [lon, lat])) landDots.push([lon, lat]);
+        }
+    }
+    draw();
+    })
+    .catch(() => { /* offline or blocked: base sphere/graticule still shows */ });
+})();
+</script>
+
+</body>
+</html>
