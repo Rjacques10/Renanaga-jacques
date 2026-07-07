@@ -59,11 +59,11 @@ Comptes-rendus de labs pratiques réalisés en environnement virtualisé et auto
 |---|---|---|---|
 | **Système de gestion de campus intelligent** | Java | Système explorant comment simplifier les opérations universitaires quotidiennes. | [🔗 GitHub](https://github.com/Rjacques10/Smart-Campus-Management-System) |
 | **restaurant-pro** | JavaScript | Projet web à thème restaurant — pratique de l'interactivité front-end. | [🔗 GitHub](https://github.com/Rjacques10/restaurant-pro) |
-| **Faveur-Divin** | HTML (MIT) | Projet HTML open-source — structure de page et design de contenu. | [🔗 GitHub](https://github.com/Rjacques10/Faveur-Divin) |
+| **Faveur-Divin** | HTML (MIT) | Projet HTML open-source — structure de page et design de contenu. | [🔗 GitHub](https://github.com/Rjacques10/Faveur-Divine) |
 | **CV** | HTML/CSS | CV personnel construit à la main. | [🔗 GitHub](https://github.com/Rjacques10/CV) |
 | **basique** | HTML/CSS | Projet fondamental — bases de mise en page et de style. | [🔗 GitHub](https://github.com/Rjacques10/basic) |
-| **déesse-BB** | HTML | Exploration d'une nouvelle mise en page et d'un style visuel. | [🔗 GitHub](https://github.com/Rjacques10) |
-| **LeçonsC-** | C++ | Exercices et notes d'apprentissage C++ — logique, mémoire, résolution de problèmes. | [🔗 GitHub](https://github.com/Rjacques10/LeconsC-) |
+| **déesse-BB** | HTML | Exploration d'une nouvelle mise en page et d'un style visuel. | [🔗 GitHub](https://github.com/Rjacques10/goddess-BB) |
+| **LeçonsC-** | C++ | Exercices et notes d'apprentissage C++ — logique, mémoire, résolution de problèmes. | [🔗 GitHub](https://github.com/Rjacques10/LessonsC-) |
 | **Pro_py** | Python | Scripting et résolution de problèmes computationnels. | [🔗 GitHub](https://github.com/Rjacques10/Pro_py) |
 
 ### 🔒 Privés / en cours de développement
