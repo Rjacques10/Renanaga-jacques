@@ -184,7 +184,7 @@
   .arsenal-card:hover{border-color:var(--amber); transform:translateY(-3px);}
   .arsenal-icon{font-size:1.7rem; margin-bottom:10px;}
   .arsenal-name{font-family:var(--mono); font-size:0.78rem; color:var(--text);}
-  .lab-cards{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
+  .lab-cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:22px;}
   @media (max-width:800px){.lab-cards{grid-template-columns:1fr;}}
   .lab-card{background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:22px;}
   .lab-card .lab-tag{display:inline-block; font-family:var(--mono); font-size:0.68rem; color:var(--bg); background:var(--amber); border-radius:4px; padding:2px 8px; margin-bottom:10px; letter-spacing:0.5px;}
@@ -193,6 +193,12 @@
   .lab-findings{list-style:none; font-family:var(--mono); font-size:0.78rem; color:var(--cyan);}
   .lab-findings li{margin-bottom:5px; padding-left:14px; position:relative;}
   .lab-findings li::before{content:"›"; position:absolute; left:0; color:var(--amber);}
+  .lab-report-btn{
+    font-family:var(--mono); font-size:0.8rem; font-weight:600; color:#0a0e14;
+    background:var(--amber); padding:8px 16px; border-radius:20px; display:inline-flex;
+    align-items:center; gap:6px; margin-top:14px; transition:transform .15s, background .15s;
+  }
+  .lab-report-btn:hover{background:#ffc576; transform:translateY(-1px);}
 
   /* courses */
   .course-grid{display:none; grid-template-columns:repeat(3,1fr); gap:16px;}
@@ -483,6 +489,8 @@
         <li data-i18n="lab1_f3">Extraction de bases, tables et utilisateur courant</li>
         <li data-i18n="lab1_f4">Recommandations : requêtes paramétrées, WAF, hachage des mots de passe</li>
       </ul>
+      <a class="lab-report-btn" href="assets/labs/BIS307_VulnAssessment_Report.pdf" target="_blank" rel="noopener">📄 <span data-i18n="lab_report_btn">Voir le rapport complet</span></a>
+      <a class="lab-report-btn" href="assets/labs/BIS307_VulnAssessment_Report_Redacted.pdf" target="_blank" rel="noopener" style="background:transparent; border:1px solid var(--border); color:var(--text); margin-left:8px;">🔒 <span data-i18n="lab_report_redacted_btn">Version caviardée</span></a>
     </div>
     <div class="lab-card">
       <span class="lab-tag" data-i18n="lab2_tag">BIS 303 — RAPPORT</span>
@@ -495,6 +503,20 @@
         <li data-i18n="lab2_f3">Usage du Nmap Scripting Engine (NSE)</li>
         <li data-i18n="lab2_f4">Comparaison Windows / Kali Linux, VMware networking</li>
       </ul>
+      <a class="lab-report-btn" href="assets/labs/BIS303_Nmap_Report.pdf" target="_blank" rel="noopener">📄 <span data-i18n="lab_report_btn">Voir le rapport complet</span></a>
+    </div>
+    <div class="lab-card">
+      <span class="lab-tag" data-i18n="lab3_tag">BIS 202 — DEVOIR</span>
+      <div class="project-thumb" data-lightbox="assets/labs/vlsm-topology.png"><img src="assets/labs/vlsm-topology.png" alt="VLSM network topology diagram" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+      <h3 data-i18n="lab3_title">Adressage IP &amp; VLSM</h3>
+      <p data-i18n="lab3_desc">Calcul de sous-réseaux par VLSM (Variable Length Subnet Masking) sur une topologie à 3 routeurs, à partir d'un espace d'adressage 192.168.1.0/24.</p>
+      <ul class="lab-findings">
+        <li data-i18n="lab3_f1">Découpage LAN en /26 et /27 selon le nombre d'hôtes requis</li>
+        <li data-i18n="lab3_f2">Sous-réseaux WAN en /30 pour les liaisons inter-routeurs</li>
+        <li data-i18n="lab3_f3">Calcul des plages réseau, hôtes et broadcast pour chaque segment</li>
+        <li data-i18n="lab3_f4">Optimisation de l'espace d'adressage disponible</li>
+      </ul>
+      <a class="lab-report-btn" href="assets/labs/BIS202_VLSM_Subnetting_Report.pdf" target="_blank" rel="noopener">📄 <span data-i18n="lab_report_btn">Voir le rapport complet</span></a>
     </div>
   </div>
 </section>
@@ -877,6 +899,14 @@
       lab2_f1:"Scan agressif (-A -O -sV) et détection de versions",
       lab2_f2:"Services vulnérables identifiés (FTP anonyme, Telnet, Samba obsolète)",
       lab2_f3:"Usage du Nmap Scripting Engine (NSE)", lab2_f4:"Comparaison Windows / Kali Linux, VMware networking",
+      lab_report_btn:"Voir le rapport complet",
+      lab_report_redacted_btn:"Version caviardée",
+      lab3_tag:"BIS 202 — DEVOIR", lab3_title:"Adressage IP &amp; VLSM",
+      lab3_desc:"Calcul de sous-réseaux par VLSM (Variable Length Subnet Masking) sur une topologie à 3 routeurs, à partir d'un espace d'adressage 192.168.1.0/24.",
+      lab3_f1:"Découpage LAN en /26 et /27 selon le nombre d'hôtes requis",
+      lab3_f2:"Sous-réseaux WAN en /30 pour les liaisons inter-routeurs",
+      lab3_f3:"Calcul des plages réseau, hôtes et broadcast pour chaque segment",
+      lab3_f4:"Optimisation de l'espace d'adressage disponible",
       courses_tag:"ls ./coursework --all-levels", courses_title:"Formation", courses_sub:"Programme BScIS (Information Security) — SIIMT University College. Du Niveau 100 au Niveau 300 (semestre 1, en cours).",
       tab_lvl100:"Niveau 100", tab_lvl200:"Niveau 200", tab_lvl300:"Niveau 300",
       pill_done:"terminé", pill_current:"en cours",
@@ -942,6 +972,14 @@
       lab2_f1:"Aggressive scan (-A -O -sV) and version detection",
       lab2_f2:"Vulnerable services identified (anonymous FTP, Telnet, outdated Samba)",
       lab2_f3:"Use of the Nmap Scripting Engine (NSE)", lab2_f4:"Windows / Kali Linux comparison, VMware networking",
+      lab_report_btn:"View full report",
+      lab_report_redacted_btn:"Redacted version",
+      lab3_tag:"BIS 202 — ASSIGNMENT", lab3_title:"IP Addressing &amp; VLSM",
+      lab3_desc:"Subnet calculation using VLSM (Variable Length Subnet Masking) on a 3-router topology, starting from a 192.168.1.0/24 address space.",
+      lab3_f1:"LAN subnetting into /26 and /27 based on required host count",
+      lab3_f2:"WAN /30 subnets for inter-router links",
+      lab3_f3:"Network, host and broadcast range calculation for each segment",
+      lab3_f4:"Optimized use of the available address space",
       courses_tag:"ls ./coursework --all-levels", courses_title:"Coursework", courses_sub:"BScIS (Information Security) program — SIIMT University College. From Level 100 through Level 300 (semester 1, in progress).",
       tab_lvl100:"Level 100", tab_lvl200:"Level 200", tab_lvl300:"Level 300",
       pill_done:"done", pill_current:"in progress",
