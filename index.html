@@ -114,6 +114,22 @@
   .btn-primary{background:var(--amber); color:#0b1524; border-color:var(--amber);}
   .btn-primary:hover{filter:brightness(1.08); transform:translateY(-2px);}
   .btn-ghost{color:var(--text); border-color:var(--border);}
+
+  /* CV language dropdown */
+  .cv-dropdown{position:relative; display:inline-block;}
+  .cv-dropdown-menu{
+    position:absolute; top:calc(100% + 8px); left:0; min-width:170px;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:8px;
+    box-shadow:0 12px 30px rgba(0,0,0,.35); padding:6px; z-index:40;
+    display:none; flex-direction:column; gap:2px;
+  }
+  .cv-dropdown.open .cv-dropdown-menu{display:flex;}
+  .cv-dropdown-menu a{
+    font-family:var(--mono); font-size:0.82rem; color:var(--text);
+    padding:8px 10px; border-radius:6px; display:flex; align-items:center; gap:8px;
+    transition:background .15s;
+  }
+  .cv-dropdown-menu a:hover{background:var(--bg-elevated); color:var(--amber);}
   .btn-ghost:hover{border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px);}
 
   .terminal{background:var(--bg-card); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); position:relative; z-index:1;}
@@ -197,6 +213,49 @@
   .project-card.locked{border-style:dashed; opacity:0.9;}
   .lock-badge{display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); border:1px dashed var(--border); padding:4px 10px; border-radius:20px;}
 
+  /* project thumbnails */
+  .project-thumb{
+    position:relative; width:100%; aspect-ratio:16/10; border-radius:8px;
+    overflow:hidden; margin-bottom:14px; background:var(--bg-elevated);
+    border:1px solid var(--border); cursor:pointer;
+  }
+  .project-thumb img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .35s ease;}
+  .project-thumb:hover img{transform:scale(1.06);}
+  .project-thumb .thumb-placeholder{
+    display:none; position:absolute; inset:0; flex-direction:column; align-items:center; justify-content:center;
+    gap:8px; color:var(--text-muted); font-family:var(--mono); font-size:0.72rem; text-align:center; padding:10px;
+    background:repeating-linear-gradient(45deg, var(--bg-card), var(--bg-card) 10px, var(--bg-elevated) 10px, var(--bg-elevated) 20px);
+  }
+  .project-thumb .thumb-placeholder svg{opacity:0.5;}
+  .project-thumb.missing img{display:none;}
+  .project-thumb.missing .thumb-placeholder{display:flex;}
+  .project-thumb.missing{cursor:default;}
+  .thumb-zoom{
+    position:absolute; top:8px; right:8px; width:30px; height:30px; border-radius:50%;
+    background:rgba(10,14,20,.7); display:flex; align-items:center; justify-content:center;
+    font-size:0.85rem; opacity:0; transition:opacity .2s; pointer-events:none;
+  }
+  .project-thumb:hover .thumb-zoom{opacity:1;}
+  .project-thumb.missing .thumb-zoom{display:none;}
+
+  /* lightbox */
+  .lightbox-overlay{
+    position:fixed; inset:0; background:rgba(5,7,10,.92); z-index:999;
+    display:none; align-items:center; justify-content:center; padding:40px;
+    backdrop-filter:blur(6px);
+  }
+  .lightbox-overlay.open{display:flex;}
+  .lightbox-overlay img{max-width:90vw; max-height:85vh; border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,.5);}
+  .lightbox-close{
+    position:absolute; top:22px; right:28px; font-family:var(--mono); font-size:1.8rem;
+    color:#fff; cursor:pointer; background:none; border:none; line-height:1;
+  }
+  .lightbox-caption{
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+    font-family:var(--mono); font-size:0.8rem; color:var(--text-muted);
+    background:rgba(10,14,20,.7); padding:6px 14px; border-radius:20px;
+  }
+
   /* projects */
   .project-tabs{display:flex; gap:10px; margin-bottom:28px; flex-wrap:wrap;}
   .tab-btn{font-family:var(--mono); font-size:0.8rem; border:1px solid var(--border); background:var(--bg-card); color:var(--text-muted); padding:8px 16px; border-radius:20px; cursor:pointer; transition:all .2s;}
@@ -212,6 +271,20 @@
   .sw{width:9px; height:9px; border-radius:50%; display:inline-block;}
   .project-desc{color:var(--text-muted); font-size:0.88rem; margin-bottom:14px;}
   .project-link{font-family:var(--mono); font-size:0.8rem; color:var(--cyan);}
+
+  /* live demo button + status badges */
+  .project-links{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:2px; flex-wrap:wrap;}
+  .demo-btn{
+    font-family:var(--mono); font-size:0.76rem; font-weight:600; color:#0a0e14;
+    background:var(--amber); padding:5px 12px; border-radius:20px; display:inline-flex; align-items:center; gap:6px;
+    transition:transform .15s, background .15s;
+  }
+  .demo-btn:hover{background:#ffc576; transform:translateY(-1px);}
+  .demo-badge{
+    font-family:var(--mono); font-size:0.72rem; color:var(--text-muted);
+    border:1px dashed var(--border); padding:4px 10px; border-radius:20px; display:inline-flex; align-items:center; gap:6px;
+    cursor:default;
+  }
   .project-link:hover{color:var(--amber);}
 
   /* timeline (experience) */
@@ -289,7 +362,13 @@
       <h1><span data-i18n="hero_title_1">Sécuriser</span> <span class="accent" data-i18n="hero_title_2">l'information</span>, <span data-i18n="hero_title_3">un système à la fois.</span></h1>
       <p class="role" data-i18n="hero_role">Étudiant en Sécurité de l'Information (BScIS) à SIIMT University College passionné de pentesting, réseaux et développement web.</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="assets/CV_Jacques_Renanga.pdf" download><span data-i18n="btn_cv">↓ Télécharger mon CV</span></a>
+        <div class="cv-dropdown">
+          <button class="btn btn-primary cv-dropdown-toggle" type="button"><span data-i18n="btn_cv">↓ Télécharger mon CV</span> ▾</button>
+          <div class="cv-dropdown-menu">
+            <a href="assets/CV_Jacques_Renanga.pdf" download>🇫🇷 <span data-i18n="cv_fr">Français</span></a>
+            <a href="assets/CV_Jacques_Renanga_EN.pdf" download>🇬🇧 <span data-i18n="cv_en">English</span></a>
+          </div>
+        </div>
         <a class="btn btn-ghost" href="#contact"><span data-i18n="btn_contact">Me contacter</span></a>
         <a class="btn btn-ghost" href="#labs"><span data-i18n="btn_labs">Voir mes labs</span></a>
       </div>
@@ -395,6 +474,7 @@
   <div class="lab-cards">
     <div class="lab-card">
       <span class="lab-tag" data-i18n="lab1_tag">BIS 307 — RAPPORT</span>
+      <div class="project-thumb" data-lightbox="assets/labs/sqli-recon.png"><img src="assets/labs/sqli-recon.png" alt="Subfinder recon screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
       <h3 data-i18n="lab1_title">Évaluation de vulnérabilités — Reconnaissance &amp; SQLi</h3>
       <p data-i18n="lab1_desc">Simulation complète d'un audit de sécurité sur un environnement autorisé (vulnweb.com), de la reconnaissance à l'exploitation contrôlée.</p>
       <ul class="lab-findings">
@@ -406,6 +486,7 @@
     </div>
     <div class="lab-card">
       <span class="lab-tag" data-i18n="lab2_tag">BIS 303 — RAPPORT</span>
+      <div class="project-thumb" data-lightbox="assets/labs/nmap-recon.png"><img src="assets/labs/nmap-recon.png" alt="Nmap scan screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
       <h3 data-i18n="lab2_title">Reconnaissance réseau avec Nmap</h3>
       <p data-i18n="lab2_desc">Scan réseau complet d'une machine cible Metasploitable2 depuis Kali Linux : découverte d'hôtes, ports, services et détection d'OS.</p>
       <ul class="lab-findings">
@@ -494,83 +575,153 @@
   <div class="project-grid active" id="grid-web">
     
     <div class="project-card">
+      <div class="project-thumb" data-lightbox="assets/projects/cv.png"><img src="assets/projects/cv.png" alt="cv screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">CV</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
       <p class="project-desc" data-i18n="proj_cv">Un CV en HTML/CSS construit à la main — un exercice de mise en page et de style de contenu personnel.</p>
-      <a class="project-link" href="https://github.com/Rjacques10/CV" target="_blank" rel="noopener">→ view repository</a>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/Rjacques10/CV" target="_blank" rel="noopener">→ view repository</a>
+        <span class="demo-slot" data-demo="cv"></span>
+      </div>
     </div>
     <div class="project-card">
+      <div class="project-thumb" data-lightbox="assets/projects/restaurant-pro.png"><img src="assets/projects/restaurant-pro.png" alt="restaurant-pro screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">restaurant-pro</span><span class="lang-dot"><span class="sw" style="background:#f1e05a"></span>JavaScript</span></div>
       <p class="project-desc" data-i18n="proj_resto">Un projet web à thème restaurant utilisé pour pratiquer l'interactivité front-end en JavaScript.</p>
-      <a class="project-link" href="https://github.com/Rjacques10/restaurant-pro" target="_blank" rel="noopener">→ view repository</a>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/Rjacques10/restaurant-pro" target="_blank" rel="noopener">→ view repository</a>
+        <span class="demo-slot" data-demo="restaurant-pro"></span>
+      </div>
     </div>
     <div class="project-card">
+      <div class="project-thumb" data-lightbox="assets/projects/basique.png"><img src="assets/projects/basique.png" alt="basique screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">basique</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
       <p class="project-desc" data-i18n="proj_basique">Un projet HTML/CSS fondamental pour ancrer les bases de la mise en page et du style.</p>
-      <a class="project-link" href="https://github.com/Rjacques10/basic" target="_blank" rel="noopener">→ view repository</a>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/Rjacques10/basic" target="_blank" rel="noopener">→ view repository</a>
+        <span class="demo-slot" data-demo="basique"></span>
+      </div>
     </div>
     <div class="project-card">
+      <div class="project-thumb" data-lightbox="assets/projects/faveur-divin.png"><img src="assets/projects/faveur-divin.png" alt="faveur-divin screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">Faveur-Divin</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
       <p class="project-desc" data-i18n="proj_faveur">Un projet HTML open-source (licence MIT), exploration de la structure de page et du design de contenu.</p>
-      <a class="project-link" href="https://github.com/Rjacques10/Faveur-Divine" target="_blank" rel="noopener">→ view repository</a>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/Rjacques10/Faveur-Divine" target="_blank" rel="noopener">→ view repository</a>
+        <span class="demo-slot" data-demo="faveur-divin"></span>
+      </div>
     </div>
     <div class="project-card">
+      <div class="project-thumb" data-lightbox="assets/projects/deesse-bb.png"><img src="assets/projects/deesse-bb.png" alt="deesse-bb screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">déesse-BB</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
       <p class="project-desc" data-i18n="proj_deesse">Un projet HTML public utilisé pour explorer une nouvelle mise en page et un nouveau style visuel.</p>
-      <a class="project-link" href="https://github.com/Rjacques10/goddess-BB" target="_blank" rel="noopener">→ github.com/Rjacques10</a>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/Rjacques10/goddess-BB" target="_blank" rel="noopener">→ github.com/Rjacques10</a>
+        <span class="demo-slot" data-demo="deesse-bb"></span>
+      </div>
     </div>
   </div>
 
   <div class="project-grid" id="grid-java">
     <div class="project-card">
+      <div class="project-thumb" data-lightbox="assets/projects/campus-intelligent.png"><img src="assets/projects/campus-intelligent.png" alt="campus-intelligent screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">Système de gestion de campus intelligent</span><span class="lang-dot"><span class="sw" style="background:#b07219"></span>Java</span></div>
       <p class="project-desc" data-i18n="proj_campus">Un système intelligent de gestion de campus explorant comment les systèmes d'information peuvent simplifier les opérations universitaires quotidiennes.</p>
-      <a class="project-link" href="https://github.com/Rjacques10/Smart-Campus-Management-System" target="_blank" rel="noopener">→ view repository</a>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/Rjacques10/Smart-Campus-Management-System" target="_blank" rel="noopener">→ view repository</a>
+        <span class="demo-slot" data-demo="campus-intelligent"></span>
+      </div>
     </div>
   </div>
 
   <div class="project-grid" id="grid-other">
     <div class="project-card">
+      <div class="project-thumb" data-lightbox="assets/projects/lecons-cpp.png"><img src="assets/projects/lecons-cpp.png" alt="lecons-cpp screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">LeçonsC-</span><span class="lang-dot"><span class="sw" style="background:#f34b7d"></span>C++</span></div>
       <p class="project-desc" data-i18n="proj_lecons">Exercices pratiques et notes d'apprentissage du C++ — logique, mémoire et résolution de problèmes.</p>
-      <a class="project-link" href="https://github.com/Rjacques10/LessonsC-" target="_blank" rel="noopener">→ view repository</a>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/Rjacques10/LessonsC-" target="_blank" rel="noopener">→ view repository</a>
+        <span class="demo-slot" data-demo="lecons-cpp"></span>
+      </div>
     </div>
     <div class="project-card">
+      <div class="project-thumb" data-lightbox="assets/projects/pro-py.png"><img src="assets/projects/pro-py.png" alt="pro-py screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">Pro_py</span><span class="lang-dot"><span class="sw" style="background:#3572A5"></span>Python</span></div>
       <p class="project-desc" data-i18n="proj_propy">Un projet Python utilisé pour pratiquer le scripting et la résolution de problèmes computationnels.</p>
-      <a class="project-link" href="https://github.com/Rjacques10/Pro_py" target="_blank" rel="noopener">→ view repository</a>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/Rjacques10/Pro_py" target="_blank" rel="noopener">→ view repository</a>
+        <span class="demo-slot" data-demo="pro-py"></span>
+      </div>
     </div>
   </div>
 
   <div class="project-grid" id="grid-private">
     <div class="project-card locked">
+      <div class="project-thumb" data-lightbox="assets/projects/plateforme-vote.png"><img src="assets/projects/plateforme-vote.png" alt="plateforme-vote screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">SRC-Plateforme-de-vote-réelle</span><span class="lang-dot"><span class="sw" style="background:#00B4AB"></span>Dart</span></div>
       <p class="project-desc" data-i18n="proj_vote">Plateforme de vote en ligne réelle, en développement actif — Dart / Flutter. Dépôt privé le temps de finaliser la sécurité du système.</p>
-      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+      <div class="project-links">
+        <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+        <span class="demo-slot" data-demo="plateforme-vote"></span>
+      </div>
     </div>
     <div class="project-card locked">
+      <div class="project-thumb" data-lightbox="assets/projects/restaurant-faveur-divine.png"><img src="assets/projects/restaurant-faveur-divine.png" alt="restaurant-faveur-divine screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">restaurant-Faveur-Divine</span><span class="lang-dot"><span class="sw" style="background:#f1e05a"></span>JavaScript</span></div>
       <p class="project-desc" data-i18n="proj_restofaveur">Variante d'un site de restaurant en JavaScript, encore en cours de développement.</p>
-      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+      <div class="project-links">
+        <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+        <span class="demo-slot" data-demo="restaurant-faveur-divine"></span>
+      </div>
     </div>
     <div class="project-card locked">
+      <div class="project-thumb" data-lightbox="assets/projects/boutique-sherina.png"><img src="assets/projects/boutique-sherina.png" alt="boutique-sherina screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">boutique Sherina</span><span class="lang-dot"><span class="sw" style="background:#e34c26"></span>HTML</span></div>
       <p class="project-desc" data-i18n="proj_boutique">Boutique en ligne de jouets (Sherina) — projet HTML en développement.</p>
-      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+      <div class="project-links">
+        <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+        <span class="demo-slot" data-demo="boutique-sherina"></span>
+      </div>
     </div>
     <div class="project-card locked">
+      <div class="project-thumb" data-lightbox="assets/projects/amour.png"><img src="assets/projects/amour.png" alt="amour screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">amour</span><span class="lang-dot"><span class="sw" style="background:#f1e05a"></span>JavaScript</span></div>
       <p class="project-desc" data-i18n="proj_amour">Projet personnel en JavaScript, encore en cours de développement.</p>
-      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+      <div class="project-links">
+        <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+        <span class="demo-slot" data-demo="amour"></span>
+      </div>
     </div>
     <div class="project-card locked">
+      <div class="project-thumb" data-lightbox="assets/projects/reve-denfants.png"><img src="assets/projects/reve-denfants.png" alt="reve-denfants screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">Rêve d'enfants</span><span class="lang-dot"><span class="sw" style="background:#8b93a1"></span>—</span></div>
       <p class="project-desc" data-i18n="proj_reve">Projet personnel encore en développement, non finalisé.</p>
-      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+      <div class="project-links">
+        <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+        <span class="demo-slot" data-demo="reve-denfants"></span>
+      </div>
     </div>
     <div class="project-card locked">
+      <div class="project-thumb" data-lightbox="assets/projects/projet-ventes.png"><img src="assets/projects/projet-ventes.png" alt="projet-ventes screenshot" loading="lazy" onerror="this.closest('.project-thumb').classList.add('missing')"><span class="thumb-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg><span data-i18n="thumb_missing">Capture à venir</span></span><span class="thumb-zoom">🔍</span></div>
+
       <div class="project-top"><span class="project-title">projet_ventes</span><span class="lang-dot"><span class="sw" style="background:#DA5B0B"></span>Jupyter Notebook</span></div>
       <p class="project-desc" data-i18n="proj_ventes">Notebook d'analyse de données de ventes — exploration de données avec Python/Jupyter.</p>
-      <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+      <div class="project-links">
+        <span class="lock-badge">🔒 <span data-i18n="badge_private">Dépôt privé</span></span>
+        <span class="demo-slot" data-demo="projet-ventes"></span>
+      </div>
     </div>
   </div>
 </section>
@@ -652,7 +803,13 @@
     <a class="btn btn-ghost" href="https://wa.me/233531153364" target="_blank" rel="noopener">→ WhatsApp</a>
     <a class="btn btn-ghost" href="https://github.com/Rjacques10" target="_blank" rel="noopener">→ GitHub</a>
     <a class="btn btn-ghost" href="#" id="linkedinLink" target="_blank" rel="noopener">→ LinkedIn</a>
-    <a class="btn btn-ghost" href="assets/CV_Jacques_Renanga.pdf" download><span data-i18n="btn_cv_short">↓ CV</span></a>
+    <div class="cv-dropdown">
+      <button class="btn btn-ghost cv-dropdown-toggle" type="button"><span data-i18n="btn_cv_short">↓ CV</span> ▾</button>
+      <div class="cv-dropdown-menu">
+        <a href="assets/CV_Jacques_Renanga.pdf" download>🇫🇷 <span data-i18n="cv_fr">Français</span></a>
+        <a href="assets/CV_Jacques_Renanga_EN.pdf" download>🇬🇧 <span data-i18n="cv_en">English</span></a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -725,7 +882,9 @@
       pill_done:"terminé", pill_current:"en cours",
       projects_tag:"ls ./projects", projects_title:"Projets", projects_sub:"Une sélection de projets web et Java — coursework et builds personnels.",
       tab_web:"Projets Web", tab_java:"Projets Java", tab_other:"Autres", tab_private:"Privé / En cours",
-      badge_private:"Dépôt privé",
+      badge_private:"Dépôt privé", cv_fr:"Français", cv_en:"English",
+      thumb_missing:"Capture à venir",
+      demo_live:"Voir le site", demo_local:"Démo locale", demo_none:"Pas encore déployé",
       proj_citation:"Site de citations en français (citation-du-jour-rj.com) avec recherche, partage social, profil utilisateur et notifications par e-mail — Node.js / Express.",
       proj_cv:"Un CV en HTML/CSS construit à la main — un exercice de mise en page et de style de contenu personnel.",
       proj_resto:"Un projet web à thème restaurant utilisé pour pratiquer l'interactivité front-end en JavaScript.",
@@ -788,7 +947,9 @@
       pill_done:"done", pill_current:"in progress",
       projects_tag:"ls ./projects", projects_title:"Projects", projects_sub:"A selection of web and Java projects — coursework and personal builds.",
       tab_web:"Web Projects", tab_java:"Java Projects", tab_other:"Other", tab_private:"Private / In Progress",
-      badge_private:"Private repo",
+      badge_private:"Private repo", cv_fr:"Français", cv_en:"English",
+      thumb_missing:"Screenshot coming soon",
+      demo_live:"View live site", demo_local:"Local demo only", demo_none:"Not deployed yet",
       proj_citation:"French-language quotes website (citation-du-jour-rj.com) with search, social sharing, user profile and email notifications — Node.js / Express.",
       proj_cv:"A hand-built HTML/CSS résumé — an early exercise in structuring and styling personal content.",
       proj_resto:"A restaurant-themed web project used to practice front-end interactivity with JavaScript.",
@@ -909,6 +1070,53 @@
   typeLine();
 </script>
 
+<!--
+  ============================================================
+  LIENS DE DÉMO EN LIGNE — à remplir au fur et à mesure
+  ============================================================
+  Mets l'URL réelle entre guillemets dès qu'un projet est déployé.
+  Laisse la valeur à "" (vide) tant qu'il n'est pas en ligne :
+  un badge "pas encore déployé" ou "démo locale" s'affichera
+  automatiquement à la place du bouton — rien d'autre à toucher.
+-->
+<script>
+  const liveDemos = {
+    "cv":                       "https://rjacques10.github.io/CV/",
+    "restaurant-pro":           "",
+    "basique":                  "",
+    "faveur-divin":             "https://rjacques10.github.io/Faveur-Divine/",
+    "deesse-bb":                "https://rjacques10.github.io/goddess-BB/",
+    "campus-intelligent":       "",
+    "lecons-cpp":               "",
+    "pro-py":                   "",
+    "plateforme-vote":          "",   // testé en local (localhost) pour l'instant
+    "restaurant-faveur-divine": "",
+    "boutique-sherina":         "https://sherina-boutique.netlify.app",
+    "amour":                    "",
+    "reve-denfants":            "",
+    "projet-ventes":            "",
+  };
+
+  // Projets connus comme uniquement testés en local (pas encore hébergés)
+  const localOnly = new Set(["plateforme-vote"]);
+
+  document.querySelectorAll('.demo-slot').forEach(slot => {
+    const slug = slot.dataset.demo;
+    const url = liveDemos[slug];
+    if (url) {
+      slot.innerHTML = `<a class="demo-btn" href="${url}" target="_blank" rel="noopener">🔗 <span data-i18n="demo_live">Voir le site</span></a>`;
+    } else if (localOnly.has(slug)) {
+      slot.innerHTML = `<span class="demo-badge">💻 <span data-i18n="demo_local">Démo locale</span></span>`;
+    } else {
+      slot.innerHTML = `<span class="demo-badge">🚧 <span data-i18n="demo_none">Pas encore déployé</span></span>`;
+    }
+  });
+  // re-applique la langue active pour traduire les boutons/badges qu'on vient de créer
+  if (typeof applyLang === 'function') {
+    applyLang(document.documentElement.lang || 'fr');
+  }
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 <script>
@@ -1024,6 +1232,60 @@ fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json')
     })
     .catch(() => { /* offline or blocked: base sphere/graticule still shows */ });
 })();
+</script>
+
+<script>
+  // ----- CV language dropdown -----
+  document.querySelectorAll('.cv-dropdown-toggle').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dropdown = btn.closest('.cv-dropdown');
+      const wasOpen = dropdown.classList.contains('open');
+      document.querySelectorAll('.cv-dropdown.open').forEach(d => d.classList.remove('open'));
+      if (!wasOpen) dropdown.classList.add('open');
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.cv-dropdown.open').forEach(d => d.classList.remove('open'));
+  });
+</script>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">×</button>
+  <img id="lightboxImg" src="" alt="">
+  <span class="lightbox-caption" id="lightboxCaption"></span>
+</div>
+<script>
+  (function(){
+    const overlay = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    const caption = document.getElementById('lightboxCaption');
+    const closeBtn = document.getElementById('lightboxClose');
+
+    function openLightbox(src, title){
+      img.src = src;
+      img.alt = title || '';
+      caption.textContent = title || '';
+      overlay.classList.add('open');
+    }
+    function closeLightbox(){
+      overlay.classList.remove('open');
+      img.src = '';
+    }
+
+    document.querySelectorAll('.project-thumb').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        if(thumb.classList.contains('missing')) return;
+        const title = thumb.closest('.project-card')?.querySelector('.project-title')?.textContent || '';
+        openLightbox(thumb.dataset.lightbox, title);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) closeLightbox(); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
+  })();
 </script>
 
 </body>

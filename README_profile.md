@@ -1,6 +1,6 @@
 # Jacques Renanaga — Portfolio
 
-Portfolio personnel de **Jacques Renanaga**, étudiant en 2ᵉ année (Niveau 300) de BSc Information Security à SIIMT University College, Ghana.
+Portfolio personnel de **Jacques Renanaga**, étudiant en 3ᵉ année (Niveau 300) de BSc Information Security à SIIMT University College, Ghana.
 
 🔗 **Site en ligne :** _ajoute ton lien GitHub Pages ici une fois activé, ex: https://rjacques10.github.io/Porfolio/_
 
